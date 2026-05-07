@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brahmacharya — Rise & Stay Pure</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Background flame particles -->
+  <div class="bg-overlay"></div>
+  <canvas id="particles"></canvas>
+
+  <main>
+
+    <!-- Header -->
+    <header>
+      <div class="om">ॐ</div>
+      <h1>BRAHMACHARYA</h1>
+      <p class="subtitle">Guard your energy. Build your legacy.</p>
+    </header>
+
+    <!-- Streak Counter -->
+    <section class="streak-card" id="streakCard">
+      <div class="streak-label">Current Streak</div>
+      <div class="streak-number" id="streakDays">0</div>
+      <div class="streak-unit">DAYS</div>
+      <div class="streak-since" id="streakSince">Start your journey today</div>
+      <div class="streak-badge" id="streakBadge">🌱 Seedling</div>
+    </section>
+
+    <!-- Progress Bar -->
+    <section class="progress-section">
+      <div class="progress-labels">
+        <span>Day 0</span>
+        <span id="progressTarget">Day 90</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
+      <div class="milestone-row" id="milestoneRow"></div>
+    </section>
+
+    <!-- Today's Quote -->
+    <section class="quote-card">
+      <div class="quote-icon">✦</div>
+      <blockquote id="dailyQuote">Loading wisdom...</blockquote>
+      <div class="quote-source" id="quoteSource"></div>
+    </section>
+
+    <!-- Urge Guard -->
+    <section class="urge-guard" id="urgeGuard">
+      <h2>⚠️ Feeling the urge?</h2>
+      <p>Before you open that tab — pause. You have 60 seconds to make a better choice.</p>
+      <button class="btn-urge" id="urgeBtn">START 60-SECOND PAUSE</button>
+      <div class="urge-timer" id="urgeTimer" style="display:none">
+        <div class="countdown" id="countdown">60</div>
+        <div class="urge-msg" id="urgeMsg">Breathe. This urge will pass.</div>
+      </div>
+      <div class="urge-alternatives" id="urgeAlternatives" style="display:none">
+        <p>✅ Urge passed! Now choose a better action:</p>
+        <div class="alt-buttons">
+          <button onclick="doActivity('pushups')">💪 Do 20 Push-ups</button>
+          <button onclick="doActivity('cold')">🚿 Cold Shower</button>
+          <button onclick="doActivity('pray')">🙏 Pray / Meditate</button>
+          <button onclick="doActivity('walk')">🚶 Take a Walk</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Website Blocker Reminder -->
+    <section class="blocker-section">
+      <h2>🚫 Block Temptation Sites</h2>
+      <p>These browser extensions help you stay clean. Install one now — it takes 2 minutes.</p>
+      <div class="blocker-cards">
+        <a href="https://chrome.google.com/webstore/detail/blocksite-block-websites/eiimnmioipafcokbfikbljfdeojpcgbh" target="_blank" class="blocker-card">
+          <div class="blocker-icon">🛡️</div>
+          <div class="blocker-name">BlockSite</div>
+          <div class="blocker-desc">Chrome — block specific sites with password lock</div>
+        </a>
+        <a href="https://addons.mozilla.org/en-US/firefox/addon/blocksite/" target="_blank" class="blocker-card">
+          <div class="blocker-icon">🦊</div>
+          <div class="blocker-name">BlockSite Firefox</div>
+          <div class="blocker-desc">Firefox — same powerful blocking for Firefox users</div>
+        </a>
+        <a href="https://getcoldturkey.com/" target="_blank" class="blocker-card">
+          <div class="blocker-icon">🔒</div>
+          <div class="blocker-name">Cold Turkey</div>
+          <div class="blocker-desc">Desktop app — nuclear option, can't be bypassed</div>
+        </a>
+        <a href="https://www.focusme.com/" target="_blank" class="blocker-card">
+          <div class="blocker-icon">🧠</div>
+          <div class="blocker-name">FocusMe</div>
+          <div class="blocker-desc">Strict mode — blocks by category, not just URLs</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Night Guard -->
+    <section class="night-guard">
+      <h2>🌙 Night Guard Mode</h2>
+      <p>Set a bedtime reminder. Most relapses happen after 10 PM. Protect yourself.</p>
+      <div class="time-input-row">
+        <input type="time" id="bedtimeInput" value="22:00" />
+        <button class="btn-set" id="setBedtime">Set Reminder</button>
+      </div>
+      <div class="reminder-status" id="reminderStatus"></div>
+      <div class="night-tips">
+        <div class="tip">📵 Phone in another room before bed</div>
+        <div class="tip">📖 Read 10 mins before sleeping</div>
+        <div class="tip">🙏 Say a prayer before closing your eyes</div>
+        <div class="tip">🥶 Cold shower at night kills urges instantly</div>
+      </div>
+    </section>
+
+    <!-- Streak Actions -->
+    <section class="actions">
+      <button class="btn-primary" id="startBtn">🔥 START / RESET STREAK</button>
+      <button class="btn-danger" id="relapseBtn">💔 I Relapsed</button>
+    </section>
+
+    <!-- Relapse Modal -->
+    <div class="modal-overlay" id="relapseModal" style="display:none">
+      <div class="modal">
+        <div class="modal-icon">🤲</div>
+        <h3>You are not your failure.</h3>
+        <p>Every saint has a past. Every warrior has fallen. What defines you is getting back up.<br><br>
+        <em>"Verily, Allah loves those who are constantly repentant and loves those who purify themselves."</em><br>
+        — Quran 2:222</p>
+        <p style="margin-top:12px"><em>"The strong man is not the one who overcomes others. The strong man is the one who controls himself when angry — and in temptation."</em><br>— Hadith</p>
+        <div class="modal-btns">
+          <button class="btn-primary" id="confirmRelapse">Reset & Rise Again</button>
+          <button class="btn-secondary" id="cancelRelapse">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Motivation Log -->
+    <section class="log-section">
+      <h2>📿 Your Wins Today</h2>
+      <p>Every urge you beat is a victory. Log it.</p>
+      <div class="log-input-row">
+        <input type="text" id="logInput" placeholder="e.g. Beat an urge at 11pm, did push-ups instead" maxlength="120"/>
+        <button class="btn-log" id="logBtn">Log</button>
+      </div>
+      <ul class="log-list" id="logList"></ul>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats-section">
+      <h2>📊 Your Stats</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num" id="totalDays">0</div>
+          <div class="stat-label">Total Clean Days</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="bestStreak">0</div>
+          <div class="stat-label">Best Streak</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="urgesBeaten">0</div>
+          <div class="stat-label">Urges Beaten</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="relapseCount">0</div>
+          <div class="stat-label">Times Risen Again</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>ॐ <em>Your energy is sacred. Protect it.</em> ॐ</p>
+      <p style="font-size:0.75rem;opacity:0.5;margin-top:8px">All data stored locally on your device. Private & offline.</p>
+    </footer>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
